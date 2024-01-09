@@ -25,9 +25,7 @@ serve = "autogpt.app.cli:serve"
 python = "^3.10"
 # autogpt-forge = { path = "../forge" }
 autogpt-forge = {git = "https://github.com/Significant-Gravitas/AutoGPT.git", subdirectory = "autogpts/forge"}
-beautifulsoup4 = "^4.12.2"
-charset-normalizer = "^3.1.0"
-click = "*"
+
 colorama = "^0.4.6"
 distro = "^1.8.0"
 docker = "*"
@@ -62,18 +60,7 @@ spacy = "^3.0.0"
 tiktoken = "^0.5.0"
 webdriver-manager = "*"
 
-# OpenAI and Generic plugins import
-openapi-python-client = "^0.14.0"
-
-# Benchmarking
-agbenchmark = { path = "../../benchmark", optional = true }
-
-[tool.poetry.extras]
-benchmark = ["agbenchmark"]
-
-[tool.poetry.group.dev.dependencies]
-auto-gpt-plugin-template = {git = "https://github.com/Significant-Gravitas/Auto-GPT-Plugin-Template", rev = "0.1.0"}
-black = "*"
+# pyproject.toml content
 flake8 = "*"
 gitpython = "^3.1.32"
 isort = "*"
@@ -92,15 +79,15 @@ pytest-asyncio = "*"
 pytest-benchmark = "*"
 pytest-cov = "*"
 pytest-integration = "*"
-pytest-mock = "*"
+# pyproject.toml content
 pytest-recording = "*"
-pytest-xdist = "*"
+# pyproject.toml content
 vcrpy = {git = "https://github.com/Significant-Gravitas/vcrpy.git", rev = "master"}
 
 
 [build-system]
 requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+# pyproject.toml content
 
 
 [tool.black]
@@ -108,12 +95,28 @@ line-length = 88
 target-version = ['py310']
 include = '\.pyi?$'
 packages = ["autogpt"]
-extend-exclude = '.+/(dist|.venv|venv|build|data)/.+'
+# pyproject.toml content
 
 
 [tool.isort]
 profile = "black"
-multi_line_output = 3
+# pyproject.toml content
+include_trailing_comma = true
+# pyproject.toml content
+use_parentheses = true
+
+line_length = 88
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
+
+[tool.isort]
+profile = "black"
+# pyproject.toml content
 include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
@@ -130,13 +133,19 @@ skip = '''
     .tox
     __pycache__
     *.pyc
+    
+'''
+[tool.pytest.ini_options]
+markers = [
+    "requires_openai_api_key",
+    "# pyproject.toml content
+]
+    .tox
+    __pycache__
+    *.pyc
     .env
     venv*/*
-    .venv/*
-    reports/*
-    dist/*
 
-'''
 
 
 [tool.pytest.ini_options]
