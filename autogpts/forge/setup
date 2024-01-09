@@ -1,6 +1,6 @@
 #!/bin/bash
 
- ENV_PATH=$(poetry env info --path)
+if [ ! -f "pyproject.toml" ]; then
  if [ -d "$ENV_PATH" ]; then
      rm -rf $ENV_PATH
      echo "Removed the poetry environment at $ENV_PATH."
@@ -8,6 +8,8 @@
      echo "No poetry environment found."
  fi
 
- poetry install --extras benchmark
+    echo "pyproject.toml file not found."
+    exit 1
+fi
  echo "Setup completed successfully."
  exit 0
