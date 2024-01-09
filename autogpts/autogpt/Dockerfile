@@ -28,10 +28,10 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN poetry config installer.max-workers 10
 
 WORKDIR /app
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 
 # Set the entrypoint
-ENTRYPOINT ["poetry", "run", "autogpt", "--install-plugin-deps"]
+ENTRYPOINT ["poetry", "run", "autogpt", "--install-plugin-deps", "--no-root"]
 CMD []
 
 # dev build -> include everything
