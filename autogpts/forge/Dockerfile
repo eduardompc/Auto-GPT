@@ -34,7 +34,7 @@ COPY . /app
 
 
 # Make port 80 available to the world outside this container
-EXPOSE 8000
+COPY pyproject.toml \.\/
 
 # Run the application when the container launches
 CMD ["poetry", "run", "python", "autogpt/__main__.py"]
