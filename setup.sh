@@ -1,5 +1,18 @@
 #!/bin/bash
 
+mkdir -p ~/.pyenv
+curl https://pyenv.run | bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+source ~/.bashrc
+pyenv install 3.11.5
+pyenv global 3.11.5
+
+pip3 install poetry
+poetry install
+exit 0touch setup.sh#!/bin/bash
+
 if [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
     echo "This script cannot be run on Windows."
     echo "Please follow the installation instructions at https://docs.python.org/3/using/windows.html"
