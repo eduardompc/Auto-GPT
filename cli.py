@@ -21,7 +21,7 @@ def cli():
 
 
 @cli.command()
-def setup():
+def setup(repo, branch_to_use):
     """Installs dependencies needed for your system. Works with Linux, MacOS and Windows WSL."""
     import os
     import subprocess
@@ -46,6 +46,22 @@ d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P88 888           888
     script_dir = os.path.dirname(os.path.realpath(__file__))
     setup_script = os.path.join(script_dir, "setup.sh")
     install_error = False
+    if os.path.exists(setup_script):
+        click.echo(click.style("🚀 Setup initiated...\n", fg="green"))
+        try:
+            subprocess.check_call([setup_script], cwd=script_dir)
+        except subprocess.CalledProcessError:
+            click.echo(
+                click.style("❌ There was an issue with the installation.", fg="red")
+            )
+            install_error = True
+    else:
+        click.echo(
+            click.style(
+                "❌ Error: setup.sh does not exist in the current directory.", fg="red"
+            )
+        )
+        install_error = True
     if os.path.exists(setup_script):
         click.echo(click.style("🚀 Setup initiated...\n", fg="green"))
         try:
