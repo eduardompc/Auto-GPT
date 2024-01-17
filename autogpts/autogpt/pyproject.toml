@@ -10,9 +10,10 @@ homepage = "https://github.com/Significant-Gravitas/AutoGPT/tree/master/autogpts
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "Operating System :: OS Independent"
 ]
-packages = [{ include = "autogpt" }]
+packages = [
+  { include = "..\
 
 
 [tool.poetry.scripts]
@@ -96,6 +97,12 @@ pytest-mock = "*"
 pytest-recording = "*"
 pytest-xdist = "*"
 vcrpy = {git = "https://github.com/Significant-Gravitas/vcrpy.git", rev = "master"}
+
+[tool.pytest.ini_options]
+markers = [
+    "requires_openai_api_key",
+    "requires_huggingface_api_key"
+]
 
 
 [build-system]
