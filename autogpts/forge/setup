@@ -8,6 +8,6 @@
      echo "No poetry environment found."
  fi
 
- poetry install --extras benchmark
+ poetry install --extras benchmark --extras benchmark
  echo "Setup completed successfully."
  exit 0
