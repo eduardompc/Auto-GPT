@@ -29,9 +29,9 @@ class AuthService {
   }
 
 // Sign in with GitHub using redirect
-  Future<UserCredential?> signInWithGitHub() async {
+  Future<UserCredential?> signInWithGitHubUsingGithubAuthProvider() async {
     try {
-      final GithubAuthProvider provider = GithubAuthProvider();
+      final GitHubAuthProvider provider = GitHubAuthProvider();
       return await _auth.signInWithPopup(provider);
     } catch (e) {
       print("Error during GitHub Sign-In: $e");
