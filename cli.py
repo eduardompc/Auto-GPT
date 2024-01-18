@@ -6,6 +6,9 @@ To ensure efficiency, add the imports to the functions so only what is needed is
 """
 try:
     import click
+import subprocess
+import requests
+from github import Github
     import github
 except ImportError:
     import os
@@ -165,7 +168,7 @@ d88P     888  "Y88888  "Y888 "Y88P"   "Y8888P88 888           888
         install_error = True
         print_access_token_instructions = True
 
-    if print_access_token_instructions:
+    if print_access_token_instructions and not github_access_token:
         # Instructions to set up GitHub access token
         click.echo(
             click.style(
