@@ -1,4 +1,7 @@
-#!/bin/bash
+if [ ! -f "pyproject.toml" ] && [ ! -f "../pyproject.toml" ]; then
+    echo "pyproject.toml file not found"
+    exit 1
+fi#!/bin/bash
 
 if [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
     echo "This script cannot be run on Windows."
