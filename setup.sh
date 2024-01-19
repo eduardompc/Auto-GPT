@@ -24,6 +24,18 @@ else
         pyenv global 3.11.5
     fi
 
+    if ! command -v python3 &> /dev/null
+    then
+        echo "python3 could not be found"
+        exit 1
+    fi
+
+    if ! command -v curl &> /dev/null
+    then
+        echo "curl could not be found"
+        exit 1
+    fi
+
     if ! command -v poetry &> /dev/null
     then
         echo "poetry could not be found"
