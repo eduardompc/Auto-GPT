@@ -18,7 +18,7 @@ ENV POETRY_VERSION=1.1.8 \
     POETRY_VIRTUALENVS_CREATE=false \
     PATH="$POETRY_HOME/bin:$PATH"
 
-RUN pip3 install poetry
+RUN pip3 install poetry==1.1.8
 
 COPY pyproject.toml poetry.lock* /app/
 
