@@ -8,12 +8,15 @@ if TYPE_CHECKING:
     from autogpt.agents.agent import AgentSettings
 
 from autogpt.agents.utils.agent_file_manager import AgentFileManager
+from typing import Optional
+from pathlib import Path
 
 
 class AgentManager:
-    def __init__(self, app_data_dir: Path):
+    def __init__(self, app_data_dir: Path, pyproject_path: Optional[Path] = None):
         self.agents_dir = app_data_dir / "agents"
-        if not self.agents_dir.exists():
+        if pyproject_path and not pyproject_path.exists():
+            raise FileNotFoundError('The pyproject.toml file does not exist.')
             self.agents_dir.mkdir()
 
     @staticmethod
