@@ -23,7 +23,7 @@ ENV PIP_NO_CACHE_DIR=yes \
     POETRY_NO_INTERACTION=1
 
 # Install and configure Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL -L https://install.python-poetry.org | python3 -
 ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN poetry config installer.max-workers 10
 
