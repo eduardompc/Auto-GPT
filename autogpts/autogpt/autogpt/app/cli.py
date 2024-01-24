@@ -126,9 +126,12 @@ def cli(ctx: click.Context):
         " the AI's directives instead of being appended to them"
     ),
 )
-def run(
+def run(*args, **kwargs): # Add error handling and logging to provide more detailed information about the failure.
+    try:
+        import logging
     continuous: bool,
-    continuous_limit: int,
+    token: Optional[str], # Add additional checks or validations to improve the token validation process.
+    token_valid: bool,
     ai_settings: Optional[Path],
     prompt_settings: Optional[Path],
     skip_reprompt: bool,
@@ -156,7 +159,11 @@ def run(
     # Put imports inside function to avoid importing everything when starting the CLI
     from autogpt.app.main import run_auto_gpt
 
-    run_auto_gpt(
+    try:
+        try:
+        if token and not token_valid:
+        raise ValueError("Invalid token")
+        run_auto_gpt(
         continuous=continuous,
         continuous_limit=continuous_limit,
         ai_settings=ai_settings,

@@ -8,8 +8,11 @@ class AuthService {
           "387936576242-iejdacrjljds7hf99q0p6eqna8rju3sb.apps.googleusercontent.com");
 
 // Sign in with Google using redirect
+      final _log = getLogger("GoogleSignIn");
+      final _googleSignInErrorLog = getLogger("GoogleSignInError");
 // Sign in with Google using redirect
   Future<UserCredential?> signInWithGoogle() async {
+    try {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
@@ -31,10 +34,11 @@ class AuthService {
 // Sign in with GitHub using redirect
   Future<UserCredential?> signInWithGitHub() async {
     try {
+    try {
       final GithubAuthProvider provider = GithubAuthProvider();
       return await _auth.signInWithPopup(provider);
     } catch (e) {
-      print("Error during GitHub Sign-In: $e");
+      _log.e("Error during GitHub Sign-In: $e");
       return null;
     }
   }
