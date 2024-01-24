@@ -98,7 +98,12 @@ class Agent(
         self.created_at = datetime.now().strftime("%Y%m%d_%H%M%S")
         """Timestamp the agent was created; only used for structured debug logging."""
 
-        self.log_cycle_handler = LogCycleHandler()
+        self.log_cycle_handler = None
+
+        try:
+            self.log_cycle_handler = LogCycleHandler()
+        except Exception as e:
+            logger.error('Error occurred while initializing log_cycle_handler', exc_info=True)
         """LogCycleHandler for structured debug logging."""
 
     def build_prompt(
@@ -166,26 +171,29 @@ class Agent(
     def parse_and_process_response(
         self, llm_response: ChatModelResponse, *args, **kwargs
     ) -> Agent.ThoughtProcessOutput:
-        for plugin in self.config.plugins:
-            if not plugin.can_handle_post_planning():
-                continue
-            llm_response.response["content"] = plugin.post_planning(
-                llm_response.response.get("content", "")
+        try:
+            for plugin in self.config.plugins:
+                if not plugin.can_handle_post_planning():
+                    continue
+                llm_response.response["content"] = plugin.post_planning(
+                    llm_response.response.get("content", "")
+                )
+
+            (
+                command_name,
+                arguments,
+                assistant_reply_dict,
+            ) = self.prompt_strategy.parse_response_content(llm_response.response)
+
+            self.log_cycle_handler.log_cycle(
+                self.ai_profile.ai_name,
+                self.created_at,
+                self.config.cycle_count,
+                assistant_reply_dict,
+                NEXT_ACTION_FILE_NAME,
             )
-
-        (
-            command_name,
-            arguments,
-            assistant_reply_dict,
-        ) = self.prompt_strategy.parse_response_content(llm_response.response)
-
-        self.log_cycle_handler.log_cycle(
-            self.ai_profile.ai_name,
-            self.created_at,
-            self.config.cycle_count,
-            assistant_reply_dict,
-            NEXT_ACTION_FILE_NAME,
-        )
+        except Exception as e:
+            logger.error('Error occurred during parse_and_process_response', exc_info=True)
 
         if command_name:
             self.event_history.register_action(
@@ -206,15 +214,18 @@ class Agent(
     ) -> ActionResult:
         result: ActionResult
 
-        if command_name == "human_feedback":
-            result = ActionInterruptedByHuman(feedback=user_input)
-            self.log_cycle_handler.log_cycle(
-                self.ai_profile.ai_name,
-                self.created_at,
-                self.config.cycle_count,
-                user_input,
-                USER_INPUT_FILE_NAME,
-            )
+        try:
+            if command_name == "human_feedback":
+                result = ActionInterruptedByHuman(feedback=user_input)
+                self.log_cycle_handler.log_cycle(
+                    self.ai_profile.ai_name,
+                    self.created_at,
+                    self.config.cycle_count,
+                    user_input,
+                    USER_INPUT_FILE_NAME,
+                )
+        except Exception as e:
+            logger.error('Error occurred during execute:human_feedback', exc_info=True)
 
         else:
             for plugin in self.config.plugins:
