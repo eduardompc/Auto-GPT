@@ -59,7 +59,7 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
+          curl -sSL https://install.python-poetry.org | python -
           poetry install
 
       - name: Lint with flake8
@@ -184,7 +184,7 @@ jobs:
         if: success() || failure()
         run: |
           config_key="http.${{ github.server_url }}/.extraheader"
-          base64_pat=$(echo -n "pat:${{ secrets.PAT_REVIEW }}" | base64 -w0)
+          base64_pat=$(echo -n "pat:${{ secrets.PAT_REVIEW }}" | base64)
 
           git config "$config_key" \
             "Authorization: Basic $base64_pat"
@@ -255,4 +255,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-logs
-          path: autogpts/autogpt/logs/
+          path: autogpt/autogpt/logs/
