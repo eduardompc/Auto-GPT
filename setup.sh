@@ -23,7 +23,22 @@ else
 
     if ! command -v poetry &> /dev/null
     then
-        echo "poetry could not be found"
+        if [ ! -f pyproject.toml ]; then
+    cat <<EOF >pyproject.toml
+[tool.poetry]
+name = ""
+version = "0.1.0"
+echo "pyproject.toml file does not exist and was created"description = ""
+authors = []
+license = ""
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+EOF
+    echo "pyproject.toml file does not exist and was created"
+fi
+echo "poetry could not be found"
         echo "Installing poetry..."
         curl -sSL https://install.python-poetry.org | python3 -
     fi
