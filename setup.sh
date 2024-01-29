@@ -25,6 +25,6 @@ else
     then
         echo "poetry could not be found"
         echo "Installing poetry..."
-        curl -sSL https://install.python-poetry.org | python3 -
+        echo "pyproject.toml file not found. Please create a pyproject.toml file in the root directory of the repository."
     fi
 fi
