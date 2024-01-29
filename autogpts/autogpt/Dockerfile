@@ -29,6 +29,7 @@ RUN poetry config installer.max-workers 10
 
 WORKDIR /app
 COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml .
 
 # Set the entrypoint
 ENTRYPOINT ["poetry", "run", "autogpt", "--install-plugin-deps"]
