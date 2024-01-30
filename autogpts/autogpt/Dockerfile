@@ -28,7 +28,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 RUN poetry config installer.max-workers 10
 
 WORKDIR /app
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 
 # Set the entrypoint
 ENTRYPOINT ["poetry", "run", "autogpt", "--install-plugin-deps"]
@@ -48,6 +48,5 @@ ONBUILD COPY plugins/ ./plugins
 ONBUILD COPY prompt_settings.yaml ./prompt_settings.yaml
 ONBUILD COPY README.md ./README.md
 ONBUILD RUN mkdir ./data
-
 FROM autogpt-${BUILD_TYPE} AS autogpt
 RUN poetry install --only-root
