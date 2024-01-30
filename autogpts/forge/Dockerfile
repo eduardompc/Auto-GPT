@@ -20,7 +20,7 @@ ENV POETRY_VERSION=1.1.8 \
 
 RUN pip3 install poetry
 
-COPY pyproject.toml poetry.lock* /app/
+COPY pyproject.toml ./
 
 # Project initialization:
 RUN poetry install --no-interaction --no-ansi
