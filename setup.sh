@@ -21,7 +21,13 @@ else
         pyenv global 3.11.5
     fi
 
-    if ! command -v poetry &> /dev/null
+    if [[ ! -f ./pyproject.toml ]]
+    then
+        echo "pyproject.toml file not found"
+        echo "Creating new pyproject.toml file..."
+        # Add commands to create a new pyproject.toml file
+    fi
+    
     then
         echo "poetry could not be found"
         echo "Installing poetry..."
