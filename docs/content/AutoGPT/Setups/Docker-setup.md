@@ -27,7 +27,8 @@
           - .env
         profiles: ["exclude-from-up"]
         volumes:
-          - ./auto_gpt_workspace:/app/auto_gpt_workspace
+          - ./auto_gpt_workspace
+          - ./pyproject.toml:/app/pyproject.toml:/app/auto_gpt_workspace
           - ./data:/app/data
           ## allow auto-gpt to write logs to disk
           - ./logs:/app/logs
